@@ -191,12 +191,12 @@ public class DS_1 extends JApplet {
 
 		        	// show result in the textfield		
 		        	for(int i = 0 ; i < result_index.size()  ; i++){
-		        		if(i == result_index.size() - 1 ){ // if it is the last polynomial
+		        		if(i == 0){ // if it is the last polynomial
 		        			if(result_index_array[i] > 0){
 		        				result.setText( result.getText() + result_coefficient_array[i] + "X^" + result_index_array[i]);
 		        			}
 		        			else if(result_index_array[i] == 0){ // constant				
-		        				result.setText( result.getText() + result_coefficient_array[i] + "" );
+		        				result.setText( result.getText() + result_coefficient_array[i] );
 		        			}
 		        			else{
 		        				result.setText( result.getText() + result_coefficient_array[i] + "X^(" + result_index_array[i] + ")" );
@@ -204,14 +204,23 @@ public class DS_1 extends JApplet {
 		        		}
 					
 		        		else{ 
-		        			if(result_index_array[i] > 0){
-		        				result.setText( result.getText() + result_coefficient_array[i] + "X^" + result_index_array[i] + "+" );
+		        			if(result_index_array[i] > 0 && result_coefficient_array[i] > 0){
+		        				result.setText( result.getText() + "+" + result_coefficient_array[i] + "X^" + result_index_array[i] );
 		        			}
-		        			else if(result_index_array[i] == 0){ // constant	
-		        				result.setText( result.getText() + result_coefficient_array[i] + "+" );
+		        			else if(result_index_array[i] > 0 && result_coefficient_array[i] < 0){
+		        				result.setText( result.getText() + result_coefficient_array[i] + "X^" + result_index_array[i] );
+		        			}		        			
+		        			else if(result_index_array[i] == 0 && result_coefficient_array[i] > 0){ // constant	
+		        				result.setText( result.getText() + "+" + result_coefficient_array[i] );
 		        			}
-		        			else{
-		        				result.setText( result.getText() + result_coefficient_array[i] + "X^(" + result_index_array[i] + ")+");
+		        			else if(result_index_array[i] == 0 && result_coefficient_array[i] < 0){ // constant	
+		        				result.setText( result.getText() + result_coefficient_array[i] );
+		        			} 
+		        			else if(result_index_array[i] < 0 && result_coefficient_array[i] > 0){
+		        				result.setText( result.getText() + "+" + result_coefficient_array[i] + "X^(" + result_index_array[i] + ")" );
+		        			}
+		        			else{ // result_index_array[i] < 0 && result_coefficient_array[i] < 0
+		        				result.setText( result.getText() + result_coefficient_array[i] + "X^(" + result_index_array[i] + ")" );
 		        			}
 		        		}					
 		        	}			
@@ -343,7 +352,7 @@ public class DS_1 extends JApplet {
 
 		        	// show result in the textfield		
 		        	for(int i = 0 ; i < result_index.size()  ; i++){
-		        		if(i == result_index.size() - 1 ){ // if it is the last polynomial
+		        		if(i == 0 ){ // if it is the last polynomial
 		        			if(result_index_array[i] > 0){
 		        				result.setText( result.getText() + result_coefficient_array[i] + "X^" + result_index_array[i]);
 		        			}
@@ -356,14 +365,23 @@ public class DS_1 extends JApplet {
 		        		}
 					
 		        		else{ 
-		        			if(result_index_array[i] > 0){
-		        				result.setText( result.getText() + result_coefficient_array[i] + "X^" + result_index_array[i] + "+" );
+		        			if(result_index_array[i] > 0 && result_coefficient_array[i] > 0){
+		        				result.setText( result.getText() + "+" + result_coefficient_array[i] + "X^" + result_index_array[i] );
 		        			}
-		        			else if(result_index_array[i] == 0){ // constant	
-		        				result.setText( result.getText() + result_coefficient_array[i] + "+" );
+		        			else if(result_index_array[i] > 0 && result_coefficient_array[i] < 0){
+		        				result.setText( result.getText() + result_coefficient_array[i] + "X^" + result_index_array[i] );
+		        			}		        			
+		        			else if(result_index_array[i] == 0 && result_coefficient_array[i] > 0){ // constant	
+		        				result.setText( result.getText() + "+" + result_coefficient_array[i] );
 		        			}
-		        			else{
-		        				result.setText( result.getText() + result_coefficient_array[i] + "X^(" + result_index_array[i] + ")+");
+		        			else if(result_index_array[i] == 0 && result_coefficient_array[i] < 0){ // constant	
+		        				result.setText( result.getText() + result_coefficient_array[i] );
+		        			} 
+		        			else if(result_index_array[i] < 0 && result_coefficient_array[i] > 0){
+		        				result.setText( result.getText() + "+" + result_coefficient_array[i] + "X^(" + result_index_array[i] + ")" );
+		        			}
+		        			else{ // result_index_array[i] < 0 && result_coefficient_array[i] < 0
+		        				result.setText( result.getText() + result_coefficient_array[i] + "X^(" + result_index_array[i] + ")" );
 		        			}
 		        		}					
 		        	}			
