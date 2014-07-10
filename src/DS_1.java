@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList; 
 import java.util.Timer;
+import javax.swing.JTextArea;
 // 90 min + 90 min + 90min + 30min + 40min + 50min + 20min +
 // 15:50
 
@@ -19,8 +20,7 @@ public class DS_1 extends JApplet {
 	private JTextField polynomial_A;
 	private JTextField polynomial_B;
 	private JTextField result;
-	private JTextField cal;
-	
+	private JTextArea show_step = new JTextArea();	
 
 	// before split
 	String A_BeforeSplit = "";
@@ -50,6 +50,7 @@ public class DS_1 extends JApplet {
 	
 	int temp_A_coefficient;
 	int temp_B_coefficient;
+
 	
 	public void init(){
 		
@@ -92,11 +93,6 @@ public class DS_1 extends JApplet {
 		result.setBounds(61, 152, 379, 21);
 		result.setColumns(10);
 		getContentPane().add(result);
-
-		cal = new JTextField();
-		cal.setBounds(10, 223, 430, 260);
-		getContentPane().add(cal);
-		cal.setColumns(10);
 		
 		
 		// Button
@@ -433,7 +429,7 @@ public class DS_1 extends JApplet {
 				polynomial_A.setText ( "" );
 				polynomial_B.setText ( "" );
 				result.setText ( "" );
-				cal.setText ( "" );
+				show_step.setText ( "" );
 				
 				plus_finish = false;
 				minus_finish = false;	
@@ -481,7 +477,7 @@ public class DS_1 extends JApplet {
 				// bubble sort (polynomial A)
 		        for (int i = 0 ; i < A_polynomial.length / 2 - 1 ; i++){
 		              
-		        	for (int j = 0 ; j < A_polynomial.length / 2- i - 1 ; j++)  {
+		        	for (int j = 0 ; j < A_polynomial.length / 2 - i - 1 ; j++)  {
 		                   
 		        		if ( A_index [j+1] > A_index[j] ){
 
@@ -498,7 +494,7 @@ public class DS_1 extends JApplet {
 		        }
 
 				// bubble sort (polynomial B)  
-		        for (int i = 0 ; i < B_polynomial.length / 2- 1 ; i++){
+		        for (int i = 0 ; i < B_polynomial.length / 2 - 1 ; i++){
 		              
 		        	for (int j = 0 ; j < B_polynomial.length / 2 - i - 1 ; j++)  {
 		                   
@@ -580,6 +576,27 @@ public class DS_1 extends JApplet {
 				else{
 				}
 				
+				// 確秈︽璸衡τ埃计沮
+				// get coefficient and index of polynomial A
+				for (int i = 0; i < A_polynomial.length; i++){
+					if( i % 2 == 0 && i != 1){
+						A_coefficient[i / 2] = Integer.valueOf(A_polynomial[i]);					
+					}
+					else{ // i % 2 == 1 or i == 1
+						A_index[ (i+1)/2 - 1] = Integer.valueOf(A_polynomial[i]);							
+					}
+				}
+
+				// get coefficient and index of polynomial B				
+				for (int i = 0; i < B_polynomial.length ; i++){
+					if( i % 2 == 0 && i != 1){
+						B_coefficient[i / 2] = Integer.valueOf(B_polynomial[i]);					
+					}
+					else{ // i % 2 == 1 or i == 1
+						B_index[ (i+1)/2 - 1] = Integer.valueOf(B_polynomial[i]);							
+					}
+				}
+				
 				// turn arraylist to array
 				for(int i = 0 ; i < result_index.size(); i++){
 					result_coefficient_array[i] = result_coefficient.get(i);
@@ -608,37 +625,38 @@ public class DS_1 extends JApplet {
 
 				// step
 		        for(int i = 0; i < result_index.size(); i++){
-		        	cal.setText( cal.getText() + "step" + (i+1) + ": " );
 		        	
 		        	// initialize
 		        	temp_A_coefficient = 0;
 		        	temp_B_coefficient = 0;
 		        	
+		        	show_step.setText( show_step.getText() + "step" + (i+1) + ": " );
+		        			        	
 		        	// ∕﹚矪瞶计тA,B才赣计玒计		        	
 		        	if(result_index_array[i] >= 0)
-		        		cal.setText( cal.getText() + "矪瞶x^"  + result_index_array[i] + "\n");		        	
+		        		show_step.setText( show_step.getText() + "矪瞶x^"  + result_index_array[i] + "\n");		        	
 		        	else
-		        		cal.setText( cal.getText() + "矪瞶x^(" + result_index_array[i] + ")\n" );				        		
+		        		show_step.setText( show_step.getText() + "矪瞶x^(" + result_index_array[i] + ")\n" );				        		
 		        
 		        	// тA才玒计
-		        	for(int j = 0 ; j < A_polynomial.length / 2 ; j++){
+		        	for(int j = 0 ; j <= A_index.length / 2 ; j++){
 		        		if( result_index_array[i] == A_index[j] ){
 		        			temp_A_coefficient = A_coefficient[j];
+		        	  	}
+		        	}
+		        	
+		        	show_step.setText( show_step.getText() + "A:" + temp_A_coefficient + "x^" + result_index_array[i] + "\n" );			        	
+		        	
+		        	// тB才玒计
+		        	for(int k = 0 ; k <= B_index.length / 2 ; k++){
+		        		if( result_index_array[i] == B_index[k] ){
+		        			temp_B_coefficient = B_coefficient[k];
 		        		}
 		        	}
 		        	
-	        		cal.setText( cal.getText() + "A:" + temp_A_coefficient + "x^" + result_index_array[i] + "\n" );			        	
-		        	
-		        	// тB才玒计
-		        	for(int j = 0 ; j < B_polynomial.length / 2 ; j++){
-		        		if( result_index_array[i] == B_index[j] ){
-		        			temp_B_coefficient = B_coefficient[j];
-		        		}		        		
-		        	}		  
-		        	
-	        		cal.setText( cal.getText() + "B:" + temp_B_coefficient + "x^" + result_index_array[i] + "\n" );			        		
-		        	
-	        		cal.setText( cal.getText() + "A+B = (" + temp_A_coefficient + " + " + temp_B_coefficient + ")x^" + result_index_array[i] + "\n" );				        	
+		        	show_step.setText( show_step.getText() + "B:" + temp_B_coefficient + "x^" + result_index_array[i] + "\n" );			        		
+		       
+		        	show_step.setText( show_step.getText() + "A+B = (" + temp_A_coefficient + " + " + temp_B_coefficient + ")x^" + result_index_array[i] + "\n" );				        	
 		        }
 		        	        
 		        
@@ -669,9 +687,10 @@ public class DS_1 extends JApplet {
 		});
 		btnStep.setFont(new Font("穝灿砰", Font.PLAIN, 18));
 		getContentPane().add(btnStep);
+		show_step.setBounds(10, 223, 430, 364);
+		getContentPane().add(show_step);
 		
 	}
-	
 }
 		
 		
